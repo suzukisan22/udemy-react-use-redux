@@ -3,24 +3,21 @@ import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 
 // import App from './components/App';
-import SearchPage from './components/SearchPage';
+import SearchPage from './containers/SearchPage';
 import reducer from './reducers/';
 
-const store = createStore(reducer);
+ReactDOM.render(
+  <SearchPage 
+    history={history}
+    location={location}
+    store={createStore(reducer)}
+  />,
+  document.querySelector('.container'),
+);
 
-const render = () => {
-  const state = store.getState();
-  console.log(state);
-  ReactDOM.render(
-    <SearchPage 
-      history={history}
-      location={location}
-      place={state.place}
-      onPlaceChange={place => store.dispatch({ type: 'CHANGE_PLACE', place })}
-    />,
-    document.querySelector('.container'),
-  );
-}
+/*
+container component: 
 
-render();
-store.subscribe(render);
+presentaional component: 
+
+*/
