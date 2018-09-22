@@ -1,14 +1,30 @@
-// 変更を検知するたびにreducerが発行される
-export default (state = { place: 'hoge' }, action) => {
+import { combineReducers } from 'redux';
+
+const place = (state = '東京タワー', action) => {
   switch (action.type) {
     case 'CHANGE_PLACE':
-      return Object.assign({}, state, { place: action.place })
+      return action.place;
     default:
       return state;
   }
 };
 
+const geocodeResult = (
+  state = {
+    address: '',
+    location: { lat: 35.6585805, lng: 139.7454329 },
+  },
+  action,
+) => {
+  switch (action.type) {
+    case 'GEOCODE_FETCHED':
+      return {
+        address: action.address,
+        location: action.location,
+      };
+    default:
+      return state;
+  }
+};
 
-/*
-storeをつくって、dispatchをすると、reducerが動き、viewが更新される。
-*/
+export default combineReducers({ place, geocodeResult });
